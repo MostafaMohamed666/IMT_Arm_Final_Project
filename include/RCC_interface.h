@@ -27,6 +27,7 @@ typedef enum {
     PERIPH_SPI2,
     PERIPH_SPI3,
     PERIPH_USART2,
+	PERIPH_TIM2,
     PERIPH_USART1,
     PERIPH_USART6,
     PERIPH_SPI1,
@@ -46,6 +47,7 @@ typedef enum {
 #define SPI2   14
 #define SPI3   15
 #define USART2 17
+#define TIM2	0
 
 /*****APB2 BUS*****/
 #define USART1  4

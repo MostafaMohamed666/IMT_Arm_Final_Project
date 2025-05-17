@@ -21,7 +21,8 @@ void UART1_Peripheral_init()
 	/*_________ENABLE_________*/
 	UART1->CR1.TE=1;
 	UART1->CR1.RE=1;
-	SET_BIT(UART1->CR3, 7);
+//	SET_BIT(UART1->CR3, 7);
+//	SET_BIT(UART1->CR3, 6);
     /*________BAUD RATE________*/
 	UART1->BRR = (104<<4)|(3);
 	/*_______UART ENABLE_______*/

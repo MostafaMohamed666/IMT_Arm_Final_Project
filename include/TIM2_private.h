@@ -45,6 +45,7 @@ typedef struct
 #define UIE 0
 #define UIF 0
 #define UG 0
+#define OPM 3
 
 #define TIM2_UPCOUNT   0
 #define TIM2_DOWNCOUNT 1
