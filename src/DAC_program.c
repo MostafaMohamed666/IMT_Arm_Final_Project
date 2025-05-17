@@ -4,8 +4,8 @@
  *  Created on: Mar 21, 2025
  *      Author: Mostafa Mohamed
  */
-#include "BIT_MATH.h"
 #include "STD_TYPE.h"
+#include "BIT_MATH.h"
 #include "DAC_interface.h"
 #include "DAC_config.h"
 #include "GPIO_interface.h"
