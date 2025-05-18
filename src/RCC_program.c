@@ -69,6 +69,9 @@ void RCC_Peripheral_CLK_Enable(Peripheral_t enuPeripheral)
         case PERIPH_USART2:
             SET_BIT(RCC->APB1ENR, USART2);
             break;
+        case PERIPH_TIM2:
+            SET_BIT(RCC->APB1ENR, TIM2);
+            break;
 
         // APB2 Bus
         case PERIPH_USART1:
