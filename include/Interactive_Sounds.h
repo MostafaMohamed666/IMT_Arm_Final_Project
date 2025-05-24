@@ -10,5 +10,8 @@
 
 void Interactive_Sounds_Play_Error();
 void Interactive_Sounds_Play_Startup();
+void Interactive_Sounds_Play_Button_Click();
+void Interactive_Sounds_Play_Firmware_Updating();
+void Interactive_Sounds_Play_Firmware_Update_Success();
 
 #endif /* INTERACTIVE_SOUNDS_H_ */
