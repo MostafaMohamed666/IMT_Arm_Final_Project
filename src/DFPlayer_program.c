@@ -6,6 +6,7 @@
 #include "TIM2_interface.h"
 #include "RCC_interface.h"
 #include "SYSTICK_interface.h"
+#include "GPIO_interface.h"
 #include "DFPlayer_config.h"
 
 void DFPlayer_Init(void)
@@ -101,14 +102,15 @@ u16_t DFPlayer_Parse(u8_t *Frame)
 	switch (CMD) {
 	case 0x3F: //Returned Data of Module Power-on
 		if(Param == 0x0002) return TF_Card_online;
+		break;
 	case 0x3D: //Returned Data of Track Finished Playing on TF Card
 		return Param;
-	case 0x3D: //Initialized Device is online
-		if(Param == 0x0002) return TF_Card_online;
-		break;
-	case 0x3F: //Initialized Device is online
-		if(Param == 0x0002) return TF_Card_online;
-		break;
+//	case 0x3D: //Initialized Device is online
+//		if(Param == 0x0002) return TF_Card_online;
+//		break;
+//	case 0x3F: //Initialized Device is online
+//		if(Param == 0x0002) return TF_Card_online;
+//		break;
 	default:
 		break;
 	}
