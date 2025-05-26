@@ -21,6 +21,13 @@ void TFT_FillDisplay(const u16_t color);
 void TFT_WriteString(u8_t x, u8_t y, const char* str, FontDef font, u16_t color, u16_t bgcolor);
 void TFT_FillRectangle(u8_t x, u8_t y, u8_t w, u8_t h, u16_t color);
 void TFT_DrawProgressBar(u8_t x, u8_t y, u8_t w, u8_t h, u8_t progress, u16_t fillColor, u16_t bgColor);
+void TFT_DrawVerticalBar(u8_t x, u8_t y_bottom, u8_t barWidth, u8_t levelHeight, u8_t gap, u8_t level, u8_t maxLevel);
+void TFT_DrawVU_Meter_Array(u8_t *levels, u8_t barCount);
+void TFT_DrawPlayButton(u8_t x, u8_t y, u8_t size, u16_t color);
+void TFT_DrawPauseButton(u8_t x, u8_t y, u8_t width, u8_t height, u16_t color);
+void TFT_DrawNextButton(u8_t x, u8_t y, u8_t size, u16_t color);
+void TFT_DrawPrevButton(u8_t x, u8_t y, u8_t size, u16_t color);
+
 
 // Color definitions
 #define	TFT_BLACK   0x0000
