@@ -13,7 +13,7 @@
 #include "TFT_config.h"
 #include "TFT_private.h"
 #include "fonts.h"
-
+#include <stdlib.h>
 
 void TFT_init()
 {
@@ -106,7 +106,7 @@ void TFT_SWReset(void)
 
 void TFT_SetDrawingArea(u8_t x0, u8_t y0, u8_t x1, u8_t y1)
 {
-	TFT_Write_Command(TFT_CASET);	// column adress
+	TFT_Write_Command(TFT_CASET);	// column address
 
 	// Start at x0
 	TFT_Write_Data(0);
@@ -281,22 +281,6 @@ void TFT_DrawProgressBar(u8_t x, u8_t y, u8_t w, u8_t h, u8_t progress, u16_t fi
     }
 }
 
-void TFT_DrawProgressBar(u8_t x, u8_t y, u8_t w, u8_t h, u8_t progress, u16_t fillColor, u16_t bgColor)
-{
-    if (progress > 100) progress = 100;
-
-    // Calculate width of the filled part
-    u16_t filledWidth = (w * progress) / 100;
-
-    // Draw filled part
-    TFT_FillRectangle(x, y, filledWidth, h, fillColor);
-
-    // Draw remaining part (unfilled background)
-    if (filledWidth < w) {
-        TFT_FillRectangle(x + filledWidth, y, w - filledWidth, h, bgColor);
-    }
-}
-
 void TFT_DrawVerticalBar(u8_t x, u8_t y_bottom, u8_t barWidth, u8_t levelHeight, u8_t gap, u8_t level, u8_t maxLevel)
 {
     if (level > maxLevel) level = maxLevel;
@@ -306,31 +290,32 @@ void TFT_DrawVerticalBar(u8_t x, u8_t y_bottom, u8_t barWidth, u8_t levelHeight,
         u16_t color;
 
         if (i < level) {
-            if (i < maxLevel * 0.6)
-                color = 0x07E0; // Green
-            else if (i < maxLevel * 0.85)
-                color = 0xFFE0; // Yellow
+            if (i < maxLevel * 0.5)
+                color = TFT_GREEN; // Green
+            else if (i < maxLevel * 0.8)
+                color = TFT_YELLOW; // Yellow
             else
-                color = 0xF800; // Red
+                color = TFT_RED; // Red
         } else {
-            color = 0x0000; // Off
+            color = TFT_BLACK; // Off
         }
 
         TFT_FillRectangle(x, barY, barWidth, levelHeight, color);
     }
 }
 
-void TFT_DrawVU_Meter_Array(u8_t *levels, u8_t barCount)
+void TFT_DrawVU_Meter_Array(u8_t barCount)
 {
     const u8_t maxLevel = 10;
-    const u8_t levelHeight = 8;
-    const u8_t gap = 2;
-    const u8_t barWidth = 6;
-    const u8_t spacing = 4;
-    const u8_t y_bottom = 127;
+    const u8_t levelHeight = 4;
+    const u8_t gap = 0;
+    const u8_t barWidth = 4;
+    const u8_t spacing = 2;
+    const u8_t y_bottom = 70;
     for (u8_t i = 0; i < barCount; i++) {
-        u8_t x = 10 + i * (barWidth + spacing); // left offset + bar spacing
-        TFT_DrawVerticalBar(x, y_bottom, barWidth, levelHeight, gap, levels[i], maxLevel);
+        u8_t x = 35 + i * (barWidth + spacing); // left offset + bar spacing
+        TFT_DrawVerticalBar(x, y_bottom, barWidth, levelHeight, gap, rand() % 10, maxLevel);
+        delay_ms(30);
     }
 }
 
@@ -338,7 +323,7 @@ void TFT_DrawPlayButton(u8_t x, u8_t y, u8_t size, u16_t color)
 {
     for (u8_t i = 0; i < size; i++) {
         for (u8_t j = 0; j <= i; j++) {
-            TFT_DrawPixel(x + i, y - i/2 + j, color);
+            TFT_DrawPixel(x + size - 1 - i, y - i / 2 + j, color);
         }
     }
 }
@@ -347,13 +332,14 @@ void TFT_DrawPauseButton(u8_t x, u8_t y, u8_t width, u8_t height, u16_t color)
 {
     for (u8_t i = 0; i < height; i++) {
         for (u8_t j = 0; j < width; j++) {
-            TFT_DrawPixel(x + j, y + i, color); // Left bar
-            TFT_DrawPixel(x + j + width + 2, y + i, color); // Right bar (gap = 2px)
+            TFT_DrawPixel(x + j, y - height/2 + i, color);              // Left bar
+            TFT_DrawPixel(x + j + width + 2, y - height/2 + i, color);  // Right bar
         }
     }
 }
 
-void TFT_DrawNextButton(u8_t x, u8_t y, u8_t size, u16_t color)
+
+void TFT_DrawPrevButton(u8_t x, u8_t y, u8_t size, u16_t color)
 {
     for (u8_t i = 0; i < size; i++) {
         for (u8_t j = 0; j <= i; j++) {
@@ -367,7 +353,7 @@ void TFT_DrawNextButton(u8_t x, u8_t y, u8_t size, u16_t color)
     }
 }
 
-void TFT_DrawPrevButton(u8_t x, u8_t y, u8_t size, u16_t color)
+void TFT_DrawNextButton(u8_t x, u8_t y, u8_t size, u16_t color)
 {
     for (u8_t i = 0; i < size; i++) {
         for (u8_t j = 0; j <= i; j++) {
@@ -381,4 +367,45 @@ void TFT_DrawPrevButton(u8_t x, u8_t y, u8_t size, u16_t color)
     }
 }
 
+void TFT_DrawPage(u8_t PageNumber, u8_t *song_name)
+{
+	TFT_FillDisplay(TFT_BLACK);
 
+	switch (PageNumber) {
+		case 1:
+			TFT_WriteString(14, 5,"Main Menu", Font_11x18, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(55, 150,"1/3", Font_7x10, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(2, 30, "1.Player", Font_7x10, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(2, 42, "2.Updates", Font_7x10, TFT_WHITE, TFT_CYAN);
+
+			break;
+		case 2:
+			TFT_WriteString(35, 5,"Player", Font_11x18, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(20, 80,song_name, Font_7x10, TFT_MAGENTA, TFT_BLACK);
+			TFT_DrawNextButton(105, 100, 10, TFT_WHITE);
+			TFT_DrawPlayButton(55, 100, 10, TFT_WHITE);
+			TFT_DrawPauseButton(70, 100, 3, 10, TFT_WHITE);
+			TFT_DrawPrevButton(25, 100, 10, TFT_WHITE);
+			TFT_DrawProgressBar(14, 115,100, 5, 40,TFT_CYAN,TFT_WHITE);
+			TFT_WriteString(55, 150,"2/3", Font_7x10, TFT_WHITE, TFT_BLACK);
+
+			while(PageNumber == 2)
+			{
+			TFT_DrawVU_Meter_Array(10);
+			}
+
+			break;
+		case 3:
+			TFT_WriteString(25, 5,"Updates", Font_11x18, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(55, 150,"3/3", Font_7x10, TFT_WHITE, TFT_BLACK);
+
+			break;
+		default:
+			break;
+	}
+}
+
+TFT_DrawWirelessIcon(u8_t x, u8_t y, u16_t color, u8_t active)
+{
+
+}

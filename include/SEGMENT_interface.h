@@ -11,6 +11,7 @@
 void SEGMENT_Blink(u16_t Blink_Time);
 void SEGMENT_display_Error_Code(u8_t Error_Number);
 void SEGMENT_display_on_Startup();
+void SEGMENT_Turn_Off();
 
 #define SEGMENT_LETTER_E 0b0110000
 #define SEGMENT_LETTER_H 0b1001000

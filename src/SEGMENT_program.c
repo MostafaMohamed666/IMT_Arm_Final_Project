@@ -54,4 +54,8 @@ void SEGMENT_display_on_Startup()
     STP_Send_Data();
 }
 
-
+void SEGMENT_Turn_Off()
+{
+    STP_Shift_Data(SEGMENT_OFF, SEGMENT_OFF);
+    STP_Send_Data();
+}
