@@ -12,7 +12,7 @@
  * Choose RESET Port and Pin
  */
 #define RST_PORT PORTA
-#define RST_PIN PIN0
+#define RST_PIN PIN2
 
 /*
  * Choose A0 (Control Pin) Port and Pin
