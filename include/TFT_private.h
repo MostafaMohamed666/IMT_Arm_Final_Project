@@ -17,9 +17,16 @@
 #define TFT_CASET    0x2A	// set column adress (X)
 #define TFT_RASET    0x2B	// set row adress (Y)
 #define TFT_RAMWR    0x2C	// write to RAM
+#define TFT_INVOFF   0x20
+#define TFT_INVON    0x21
+#define TFT_GAMSET   0x26
 #define TFT_DISPON   0x29
 #define TFT_DISPOFF  0x28
 #define TFT_MADCTL	 0x36	// Memory Data Access Control
+
+#define TFT_ACTIVE		1
+#define TFT_NOTACTIVE	0
+
 
 
 

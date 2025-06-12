@@ -9,5 +9,6 @@
 #define BOOT_H_
 
 void BOOT_Jump_To_Application();
+void BOOT_Jump_To_Bootloader();
 
 #endif /* BOOT_H_ */
