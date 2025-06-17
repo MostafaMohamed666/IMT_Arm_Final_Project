@@ -449,12 +449,14 @@ void TFT_DrawPage(u8_t PageNumber)
 		TFT_IconDisplay(wifi16x16,1,1,16,16,G_Connected);
 		TFT_WriteString(25, 5,"Settings", Font_11x18, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(5, 25, "1.Brightness:", Font_7x10, TFT_WHITE, TFT_BLACK);
-		TFT_WriteString(5, 37, "2.Gamma :", Font_7x10, TFT_WHITE, TFT_BLACK);
+		TFT_WriteString(5, 37, "2.Gamma:", Font_7x10, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(5, 49, "3.Inv Colors:", Font_7x10, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(5, 61, "4.EQ Mode:", Font_7x10, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(5, 73, "5.Volume:", Font_7x10, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(80, 73, "-", Font_7x10, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(120, 73, "+", Font_7x10, TFT_WHITE, TFT_BLACK);
+		TFT_WriteString(5, 85, "6.WIFI Status:", Font_7x10, TFT_WHITE, TFT_BLACK);
+
 		TFT_WriteString(55, 150,"4/4", Font_7x10, TFT_WHITE, TFT_BLACK);
 
 		char str[10];
@@ -465,12 +467,15 @@ void TFT_DrawPage(u8_t PageNumber)
 		snprintf(str, sizeof(str), "%u", G_Gamma);
 		TFT_WriteString(100, 37, str, Font_7x10, TFT_YELLOW, TFT_BLACK);
 
-		TFT_WriteString(100, 49, G_IsInverted ? "ON" : "OFF", Font_7x10, TFT_YELLOW, TFT_BLACK);
+		TFT_WriteString(100, 49, G_IsInverted ? "ON " : "OFF", Font_7x10, TFT_YELLOW, TFT_BLACK);
 
 		TFT_WriteString(75, 61, EQMode[G_EQMode], Font_7x10, TFT_YELLOW, TFT_BLACK);
 
 		snprintf(str, sizeof(str), "%u", G_Volume);
 		TFT_WriteString(100, 73, str, Font_7x10, TFT_YELLOW, TFT_BLACK);
+		
+		TFT_WriteString(100, 85, G_Connected ? "ON " : "OFF", Font_7x10, TFT_YELLOW, TFT_BLACK);
+
 
 		break;
 	default:
@@ -653,6 +658,7 @@ void TFT_UpdateUI(void)
 			TFT_WriteString(5, 49, "3.Inv Colors:", Font_7x10, TFT_WHITE, TFT_BLACK);
 			TFT_WriteString(5, 61, "4.EQ Mode:", Font_7x10, TFT_WHITE, TFT_BLACK);
 			TFT_WriteString(5, 73, "5.Volume:", Font_7x10, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(5, 85, "6.WIFI Status:", Font_7x10, TFT_WHITE, TFT_BLACK);
 
 			snprintf(str, sizeof(str), "%u", G_Brightness);
 			TFT_WriteString(100, 25, str, Font_7x10, TFT_YELLOW, TFT_BLACK);
@@ -665,6 +671,7 @@ void TFT_UpdateUI(void)
 			TFT_WriteString(5, 49, "3.Inv Colors:", Font_7x10, TFT_WHITE, TFT_BLACK);
 			TFT_WriteString(5, 61, "4.EQ Mode:", Font_7x10, TFT_WHITE, TFT_BLACK);
 			TFT_WriteString(5, 73, "5.Volume:", Font_7x10, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(5, 85, "6.WIFI Status:", Font_7x10, TFT_WHITE, TFT_BLACK);
 
 			snprintf(str, sizeof(str), "%u", G_Gamma);
 			TFT_WriteString(100, 37, str, Font_7x10, TFT_YELLOW, TFT_BLACK);
@@ -676,8 +683,9 @@ void TFT_UpdateUI(void)
 			TFT_WriteString(5, 49, "3.Inv Colors:", Font_7x10, TFT_WHITE, TFT_BBLUE);
 			TFT_WriteString(5, 61, "4.EQ Mode:", Font_7x10, TFT_WHITE, TFT_BLACK);
 			TFT_WriteString(5, 73, "5.Volume:", Font_7x10, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(5, 85, "6.WIFI Status:", Font_7x10, TFT_WHITE, TFT_BLACK);
 
-			TFT_WriteString(100, 49, G_IsInverted ? "ON" : "OFF", Font_7x10, TFT_YELLOW, TFT_BLACK);
+			TFT_WriteString(100, 49, G_IsInverted ? "ON " : "OFF", Font_7x10, TFT_YELLOW, TFT_BLACK);
 
 		}
 		if(G_Selection == 4)
@@ -687,6 +695,7 @@ void TFT_UpdateUI(void)
 			TFT_WriteString(5, 49, "3.Inv Colors:", Font_7x10, TFT_WHITE, TFT_BLACK);
 			TFT_WriteString(5, 61, "4.EQ Mode:", Font_7x10, TFT_WHITE, TFT_BBLUE);
 			TFT_WriteString(5, 73, "5.Volume:", Font_7x10, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(5, 85, "6.WIFI Status:", Font_7x10, TFT_WHITE, TFT_BLACK);
 
 			TFT_WriteString(75, 61, EQMode[G_EQMode], Font_7x10, TFT_YELLOW, TFT_BLACK);
 
@@ -698,10 +707,25 @@ void TFT_UpdateUI(void)
 			TFT_WriteString(5, 49, "3.Inv Colors:", Font_7x10, TFT_WHITE, TFT_BLACK);
 			TFT_WriteString(5, 61, "4.EQ Mode:", Font_7x10, TFT_WHITE, TFT_BLACK);
 			TFT_WriteString(5, 73, "5.Volume:", Font_7x10, TFT_WHITE, TFT_BBLUE);
+			TFT_WriteString(5, 85, "6.WIFI Status:", Font_7x10, TFT_WHITE, TFT_BLACK);
 
 			snprintf(str, sizeof(str), "%u", G_Volume);
 			TFT_WriteString(100, 73, str, Font_7x10, TFT_YELLOW, TFT_BLACK);
 		}
+		if(G_Selection == 6)
+		{
+			TFT_WriteString(5, 25, "1.Brightness:", Font_7x10, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(5, 37, "2.Gamma :", Font_7x10, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(5, 49, "3.Inv Colors:", Font_7x10, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(5, 61, "4.EQ Mode:", Font_7x10, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(5, 73, "5.Volume:", Font_7x10, TFT_WHITE, TFT_BLACK);
+			TFT_WriteString(5, 85, "6.WIFI Status:", Font_7x10, TFT_WHITE, TFT_BBLUE);
+
+			TFT_WriteString(100, 85, G_Connected ? "ON " : "OFF", Font_7x10, TFT_YELLOW, TFT_BLACK);
+
+		}
+		TFT_WriteString(5, 85, "6.WIFI Status:", Font_7x10, TFT_WHITE, TFT_BLACK);
+
 		TFT_IconDisplay(wifi16x16,1,1,16,16,G_Connected);
 
 		break;
