@@ -4,62 +4,58 @@
  *  Created on: Mar 22, 2025
  *      Author: Mostafa Mohamed
  */
-#include <SEGMENT_config.h>
 #include "STD_TYPE.h"
 #include "BIT_MATH.h"
 #include "SEGMENT_interface.h"
+#include "SEGMENT_config.h"
 #include "GPIO_interface.h"
+#include "STP_interface.h"
+#include "SYSTICK_interface.h"
 
-u8_t SEGMENT_PINS[] = {A, B, C, D, E, F, G};
 const u8_t SEGMENT_MAP[10] = {
-    0b1000000, // 0
-    0b1111001, // 1
-    0b0100100, // 2
-    0b0110000, // 3
-    0b0011001, // 4
-    0b0010010, // 5
-    0b0000010, // 6
-    0b1111000, // 7
-    0b0000000, // 8
-    0b0010000  // 9
+	0b0000001, // 0
+	0b1001111, // 1
+	0b0010010, // 2
+	0b0000110, // 3
+	0b1001100, // 4
+	0b0100100, // 5
+	0b0100000, // 6
+	0b0001111, // 7
+	0b0000000, // 8
+    0b0000100  // 9
 };
 
-u8_t SEGMENT_Counter = 0;
+static u8_t currentLetter = 0;
+static u8_t currentNumber = 0;
 
-void SEGMENT_init()
+void SEGMENT_Blink(u16_t Blink_Time)
 {
-	for(u8_t i=0; i<7; i++){
-		GPIO_Set_Mode(SEGMENT_PORT, SEGMENT_PINS[i], OUTPUT);
+	for(u8_t i=0; i<4; i++){
+	    STP_Shift_Data(currentLetter, currentNumber);
+	    STP_Send_Data();
+	    delay_ms(Blink_Time/4);
+	    STP_Shift_Data(SEGMENT_OFF, SEGMENT_OFF);
+	    STP_Send_Data();
+	    delay_ms(Blink_Time/4);
 	}
 }
-void SEGMENT_display(u8_t number)
+void SEGMENT_display_Error_Code(u8_t Error_Number)
 {
-    for(u8_t i=0; i<7; i++){
-    	GPIO_Set_Atomic_Pin_Value(SEGMENT_PORT, SEGMENT_PINS[i], READ_BIT(SEGMENT_MAP[number], i));
-    }
-    SEGMENT_Counter = number;
+    currentLetter = SEGMENT_LETTER_E;
+    currentNumber = SEGMENT_MAP[Error_Number];
+    STP_Shift_Data(currentLetter, currentNumber);
+    STP_Send_Data();
 }
-void SEGMENT_increment()
+void SEGMENT_display_on_Startup()
 {
-	if(SEGMENT_Counter == 9){
-		SEGMENT_Counter = 0;
-		SEGMENT_display(SEGMENT_Counter);
-	} else{
-		SEGMENT_Counter++;
-	    SEGMENT_display(SEGMENT_Counter);
-	}
-}
-void SEGMENT_decrement()
-{
-	if(SEGMENT_Counter == 0){
-		SEGMENT_Counter = 9;
-		SEGMENT_display(SEGMENT_Counter);
-	} else{
-		SEGMENT_Counter--;
-		SEGMENT_display(SEGMENT_Counter);
-	}
+    currentLetter = SEGMENT_LETTER_H;
+    currentNumber = SEGMENT_LETTER_I;
+    STP_Shift_Data(currentLetter, currentNumber);
+    STP_Send_Data();
 }
 
-
-
-
+void SEGMENT_Turn_Off()
+{
+    STP_Shift_Data(SEGMENT_OFF, SEGMENT_OFF);
+    STP_Send_Data();
+}

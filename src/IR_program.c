@@ -8,6 +8,7 @@
 #include "STD_TYPE.h"
 #include "SYSTICK_interface.h"
 #include "IR_interface.h"
+#include "Interactive_Sounds.h"
 
 static u8_t StartFlag = 0;
 static u8_t Counter = 0;
@@ -33,6 +34,7 @@ void IR_EXTI_ISR(void)
     	SYSTICK_interrupt_enable();
     	StartFlag = 1;
     	SYSTICK_Call_Back_Function_SingleShot(IR_SYSTK_ISR, 15000);
+    	Interactive_Sounds_Play_Button_Click();
     } else{
     	arr[Counter] = (SYSTICK_Get_Elapsed_TickSingleShot()/2);
     	Counter++;
@@ -47,8 +49,6 @@ int main(){
     RCC_Peripheral_CLK_Enable(PERIPH_GPIOB);
     RCC_Peripheral_CLK_Enable(PERIPH_SYSCFG);
     SYSTICK_peripheral_init();
-    GPIO_Set_Mode(PORTB, PIN0, OUTPUT);
-    GPIO_Set_Mode(PORTB, PIN1, OUTPUT);
     GPIO_Set_Mode(PORTA, PIN0, INPUT);
     GPIO_Set_Input_Type(PORTA, PIN0, PULL_UP);
     EXTI_Set_Interrupt_Port(EXTI_LINE_0, EXTI_PORTA);
@@ -60,12 +60,8 @@ int main(){
 	{
 		switch (IR_value) {
 		case 12:
-            GPIO_Set_Atomic_Pin_Value(PORTB, PIN0, HIGH);
-            GPIO_Set_Atomic_Pin_Value(PORTB, PIN1, LOW);
 			break;
 		case 24:
-            GPIO_Set_Atomic_Pin_Value(PORTB, PIN0, LOW);
-            GPIO_Set_Atomic_Pin_Value(PORTB, PIN1, HIGH);
 			break;
 		default:
 			break;

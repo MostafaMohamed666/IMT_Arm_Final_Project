@@ -21,8 +21,6 @@ void UART1_Peripheral_init()
 	/*_________ENABLE_________*/
 	UART1->CR1.TE=1;
 	UART1->CR1.RE=1;
-//	SET_BIT(UART1->CR3, 7);
-//	SET_BIT(UART1->CR3, 6);
     /*________BAUD RATE________*/
 	UART1->BRR = (104<<4)|(3);
 	/*_______UART ENABLE_______*/
@@ -39,4 +37,46 @@ u8_t UART1_Recieve_Data()
 	return UART1->DR;
 }
 
+u8_t UART1_Available(void)
+{
+	return READ_BIT(UART1->SR, RXNE);
+}
+
+u8_t UART1_Recieve_Data_With_Timeout(void)
+{
+	u32_t timeout = 50000;
+	while (!READ_BIT(UART1->SR, RXNE))
+	{
+		if (--timeout == 0)
+			return 0xFF;
+	}
+	return UART1->DR;
+}
+
+
+
+u8_t UART1_Receive_Line(char *buffer)
+{
+	u8_t byte;
+	u8_t index = 0;
+
+	while (1)
+	{
+		byte = UART1_Recieve_Data();
+
+		if (byte == '\r') continue;   //
+
+		if (byte == '\n') {
+			buffer[index] = '\0';     //
+			return 1;                 //
+		}
+
+		if (index < UART_BUFFER_SIZE - 1) {
+			buffer[index++] = byte;
+		} else {
+			buffer[index] = '\0';
+			return 2; // overflow
+		}
+	}
+}
 
