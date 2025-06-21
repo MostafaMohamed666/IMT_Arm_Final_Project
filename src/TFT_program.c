@@ -20,7 +20,7 @@
 u8_t G_Brightness = 0;
 u8_t G_Gamma = 0;
 u8_t G_IsInverted = 0;
-u8_t G_Volume = 0;
+u8_t G_Volume = 20;
 u8_t G_SongProgress = 0;
 u8_t G_EQMode = 0;
 u8_t G_CurrentPage = 0;
@@ -29,16 +29,37 @@ u8_t G_CurrentSong = 0;
 u8_t G_PP_Button = TFT_PLAY;
 u8_t G_Connected = 0;
 
-const char* EQMode[] = {
-		"NORMAL",
-		"POP",
-		"ROCK",
-		"JAZZ",
-		"CLASSIC",
-		"BASS"
+
+const u16_t wifi16x16 [] = {
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0000,
+0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000,
+0xffff, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0xffff,
+0xffff, 0xffff, 0x0000, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0000, 0xffff, 0xffff,
+0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000
 };
 
-const char* Songs[] = {
+const char* EQMode[] = {
+		"NORMAL ",
+		"POP    ",
+		"ROCK   ",
+		"JAZZ   ",
+		"CLASSIC",
+		"BASS   "
+};
+
+//CONST REMOVED HERE!!
+char* Songs[] = {
 		"song1",
 		"song2",
 		"song3",
@@ -74,7 +95,7 @@ void TFT_init()
 	TFT_Write_Data(0x05); //RGB565 color code standard
 
 	// Inverse Color mode ON
-	TFT_Write_Command(0x21);
+//	TFT_Write_Command(0x21);
 
 	// Inverse Color mode ON
 	//	TFT_InvertColors(TFT_ACTIVE);
@@ -412,7 +433,7 @@ void TFT_DrawPage(u8_t PageNumber)
 		TFT_IconDisplay(wifi16x16,1,1,16,16,G_Connected);
 		TFT_WriteString(14, 5,"Main Menu", Font_11x18, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(55, 150,"1/4", Font_7x10, TFT_WHITE, TFT_BLACK);
-		TFT_WriteString(2, 30, "1.Player", Font_7x10, TFT_WHITE, TFT_BLACK);
+		TFT_WriteString(2, 30, "1.Player", Font_7x10, TFT_BLACK, TFT_WHITE);
 		TFT_WriteString(2, 42, "2.Setup", Font_7x10, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(2, 54, "3.Settings", Font_7x10, TFT_WHITE, TFT_BLACK);
 
@@ -441,6 +462,7 @@ void TFT_DrawPage(u8_t PageNumber)
 		G_CurrentPage = 3;
 		TFT_IconDisplay(wifi16x16,1,1,16,16,G_Connected);
 		TFT_WriteString(25, 5,"Updates", Font_11x18, TFT_WHITE, TFT_BLACK);
+		TFT_WriteString(5, 25, "1.Check for update", Font_7x10, TFT_BLACK, TFT_WHITE);
 		TFT_WriteString(55, 150,"3/4", Font_7x10, TFT_WHITE, TFT_BLACK);
 
 		break;
@@ -448,7 +470,7 @@ void TFT_DrawPage(u8_t PageNumber)
 		G_CurrentPage = 4;
 		TFT_IconDisplay(wifi16x16,1,1,16,16,G_Connected);
 		TFT_WriteString(25, 5,"Settings", Font_11x18, TFT_WHITE, TFT_BLACK);
-		TFT_WriteString(5, 25, "1.Brightness:", Font_7x10, TFT_WHITE, TFT_BLACK);
+		TFT_WriteString(5, 25, "1.Brightness:", Font_7x10, TFT_BLACK, TFT_WHITE);
 		TFT_WriteString(5, 37, "2.Gamma :", Font_7x10, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(5, 49, "3.Inv Colors:", Font_7x10, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(5, 61, "4.EQ Mode:", Font_7x10, TFT_WHITE, TFT_BLACK);
@@ -456,6 +478,7 @@ void TFT_DrawPage(u8_t PageNumber)
 		TFT_WriteString(80, 73, "-", Font_7x10, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(120, 73, "+", Font_7x10, TFT_WHITE, TFT_BLACK);
 		TFT_WriteString(55, 150,"4/4", Font_7x10, TFT_WHITE, TFT_BLACK);
+		TFT_WriteString(5, 85, "6.WIFI Status:", Font_7x10, TFT_WHITE, TFT_BLACK);
 
 		char str[10];
 
@@ -472,6 +495,7 @@ void TFT_DrawPage(u8_t PageNumber)
 		snprintf(str, sizeof(str), "%u", G_Volume);
 		TFT_WriteString(100, 73, str, Font_7x10, TFT_YELLOW, TFT_BLACK);
 
+		TFT_WriteString(100, 85, G_Connected ? "ON " : "OFF", Font_7x10, TFT_YELLOW, TFT_BLACK);
 		break;
 	default:
 		break;
@@ -561,7 +585,7 @@ void TFT_UpdateSongProgress(u8_t progress)
 void TFT_UpdateVolumeLevel(u8_t level)
 {
 
-	TFT_DrawSoundLevel(60,130,level, TFT_WHITE, TFT_GRAY);
+	TFT_DrawSoundLevel(60,130,level, TFT_WHITE, TFT_BLACK);
 }
 
 void TFT_ClickNext(void)

@@ -46,8 +46,8 @@ typedef enum
 	number_of_Disk_Files,
 	number_of_Flash_Files,
 	Keep_on,
-	current_track_of_card,
 	current_track_of_Disk,
+	current_track_of_card,
 	current_track_of_Flash
 }F_CMDs;
 

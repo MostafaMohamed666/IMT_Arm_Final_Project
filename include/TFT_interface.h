@@ -17,6 +17,8 @@ typedef enum
 	GC3 = 0x08
 }TFT_Gama;
 
+extern const char* EQMode[];
+
 
 void TFT_init();
 void TFT_Write_Data(u8_t data);
@@ -41,7 +43,7 @@ void TFT_IconDisplay(const u16_t *imgArr, u8_t x_start, u8_t y_start, u8_t x_end
 void TFT_DrawSoundLevel(u8_t x, u8_t y, u8_t level, u16_t activeColor, u16_t inactiveColor);
 void TFT_PlayPauseButtonActive(u8_t Button);
 void TFT_UpdateSongProgress(u8_t progress);
-void TFT_UpdateVolumeProgress(u8_t progress);
+void TFT_UpdateVolumeLevel(u8_t level);
 void TFT_ClickNext(void);
 void TFT_ClickPrev(void);
 void TFT_InvertColors(u8_t active);
@@ -76,5 +78,6 @@ extern u8_t G_CurrentPage;
 extern u8_t G_Selection;
 extern u8_t G_PP_Button;
 extern u8_t G_Connected;
+extern u8_t G_CurrentSong;
 
 #endif /* TFT_INTERFACE_H_ */
