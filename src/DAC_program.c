@@ -18,6 +18,7 @@ void DAC_init()
     	GPIO_Set_Mode(DAC_PORT, DAC_PINS[i], OUTPUT);
     }
 }
+
 void DAC_Send_Sample(const u8_t *arr, u16_t sample_index)
 {
 	for(u8_t i=0; i<8; i++){
