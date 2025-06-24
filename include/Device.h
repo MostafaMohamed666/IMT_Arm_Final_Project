@@ -8,6 +8,10 @@
 #ifndef DEVICE_H_
 #define DEVICE_H_
 
+
+#define Check_wifi	254
+#define Check_version	253
+
 typedef enum
 {
 	PAGE1=1,
@@ -29,6 +33,8 @@ typedef enum
 	SETTINGS
 }MENU_t;
 
+
+
 extern DEVICE_PAGES_t current_Page;
 
 /*___________SMART DEVICE FUNCTIONS___________*/
@@ -37,9 +43,10 @@ void DEVICE_PLAYER();
 void DEVICE_MENU();
 void DEVICE_SETUP();
 void DEVICE_SETTING();
+u8_t ButtonPressedEdge(u8_t port, u8_t pin, u8_t *prev_state);
 
 
 
-
+#define VTOR *((volatile u32_t*)0xE000ED08)
 
 #endif /* DEVICE_H_ */

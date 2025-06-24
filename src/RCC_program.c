@@ -123,6 +123,9 @@ void RCC_Peripheral_CLK_Disable(Peripheral_t enuPeripheral)
         case PERIPH_USART2:
             CLEAR_BIT(RCC->APB1ENR, USART2);
             break;
+        case PERIPH_TIM2:
+            CLEAR_BIT(RCC->APB1ENR, TIM2);
+            break;
 
         // APB2 Bus
         case PERIPH_USART1:
