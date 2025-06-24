@@ -88,3 +88,9 @@ void SysTick_Handler(){
 	}
 }
 
+void SYSTICK_Stop(void)
+{
+	STK->CTRL = 0;
+	STK->LOAD = 0;
+	STK->VAL = 0;
+}

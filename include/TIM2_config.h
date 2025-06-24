@@ -21,6 +21,6 @@
  * SET prescalar value from 1 -> 65536
  * Calculation -> fosc/[PRESCALAR]-1
  */
-#define PRESCALAR 15999
+#define PRESCALAR 15
 
 #endif /* TIM2_CONFIG_H_ */

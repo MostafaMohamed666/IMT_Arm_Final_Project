@@ -8,6 +8,10 @@
 #ifndef NVIC_INTERFACE_H_
 #define NVIC_INTERFACE_H_
 
+
+#define __disable_irq()  __asm volatile ("cpsid i")
+
+
 typedef enum
 {
 	Group16SubGroup0 = 3,

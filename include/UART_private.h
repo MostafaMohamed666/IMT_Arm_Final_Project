@@ -46,5 +46,6 @@ typedef struct
 
 #define TXE 7
 #define RXNE 5
+#define ORE	 3
 
 #endif /* UART_PRIVATE_H_ */

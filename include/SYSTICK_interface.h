@@ -18,6 +18,7 @@ void delay_us(u32_t delayTime);
 void SYSTICK_Call_Back_Function(void(*ptr)(void), u8_t time_in_us);
 u32_t  SYSTICK_Get_Elapsed_TickSingleShot();
 void SYSTICK_Call_Back_Function_SingleShot(void(*ptr)(void), u16_t time_in_us);
+void SYSTICK_Stop(void);
 
 
 #endif /* SYSTICK_INTERFACE_H_ */
