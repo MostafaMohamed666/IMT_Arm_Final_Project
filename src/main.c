@@ -19,20 +19,20 @@
 #include "Device.h"
 
 
-
 int main(){
+
 	DEVICE_init();
 	while(1)
 	{
 		switch(current_Page){
 		case PAGE1: DEVICE_MENU();
-		            break;
+		break;
 		case PAGE2: DEVICE_PLAYER();
-		            break;
+		break;
 		case PAGE3: DEVICE_SETUP();
-		            break;
+		break;
 		case PAGE4: DEVICE_SETTING();
-		            break;
+		break;
 		}
 
 	}

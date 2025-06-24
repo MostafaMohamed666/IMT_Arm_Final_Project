@@ -47,6 +47,6 @@ u8_t ButtonPressedEdge(u8_t port, u8_t pin, u8_t *prev_state);
 
 
 
-
+#define VTOR *((volatile u32_t*)0xE000ED08)
 
 #endif /* DEVICE_H_ */

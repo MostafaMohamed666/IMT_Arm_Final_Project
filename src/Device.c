@@ -73,8 +73,8 @@ void DEVICE_init()
 	//	RCC_Peripheral_CLK_Enable(PERIPH_TIM2);
 	RCC_Peripheral_CLK_Enable(PERIPH_USART1);
 	DAC_init();
-	SYSTICK_peripheral_init();
 	//	STP_init();
+	SYSTICK_peripheral_init();
 	UART1_Peripheral_init();
 	SPI_Master_init();
 	GPIO_Set_Mode(PORTA, PIN5, ALT_FUNCTION);
@@ -218,7 +218,7 @@ void DEVICE_SETUP()
 					TFT_WriteString(25, 55, "Device:" , Font_7x10, TFT_WHITE, TFT_BLACK);
 					TFT_WriteString(74, 55, GLB_Version , Font_7x10, TFT_WHITE, TFT_BLACK);
 					TFT_WriteString(5, 65, "UPDATE AVAILABLE" , Font_7x10, TFT_YELLOW, TFT_BLACK);
-					TFT_WriteString(39, 75, "(" , Font_7x10, TFT_YELLOW, TFT_BLACK);
+					TFT_WriteString(38, 75, "(" , Font_7x10, TFT_YELLOW, TFT_BLACK);
 					TFT_WriteString(40, 75, rxBuffer , Font_7x10, TFT_YELLOW, TFT_BLACK);
 					TFT_WriteString(75, 75, ")" , Font_7x10, TFT_YELLOW, TFT_BLACK);
 					TFT_WriteString(5, 85, "Press ok to start" , Font_7x10, TFT_YELLOW, TFT_BLACK);
@@ -493,7 +493,7 @@ void DEVICE_SETTING()
 
 void DEVICE_PLAYER()
 {
-	u8_t Header;
+
 	u8_t loop_counter=0;
 	u8_t prev_pin15_state = 1;
 	u8_t prev_pin14_state = 1;
